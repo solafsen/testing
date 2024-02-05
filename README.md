@@ -1,0 +1,2 @@
+Sylvia: AdminKontoController
+Ingrid: AdminKundeController
