@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import oslomet.testing.API.BankController;
-import oslomet.testing.DAL.AdminRepository;
 import oslomet.testing.DAL.BankRepository;
 import oslomet.testing.Models.Konto;
 import oslomet.testing.Models.Kunde;
@@ -281,7 +280,7 @@ public class EnhetstestBankController {
     }
 
     @Test // Test nr. 7.1 - hentKundeInfo - innlogget
-    public void hentKundeInfo_InnLogget() {
+    public void test_hentKundeInfo_InnLogget() {
 
         // arrange
         Kunde enKunde = new Kunde("01010110523",
@@ -302,7 +301,7 @@ public class EnhetstestBankController {
     }
 
     @Test // Test nr. 7.2 - hentKundeInfo - Ikke innlogget
-    public void hentKundeInfo_IkkeloggetInn() {
+    public void test_hentKundeInfo_IkkeloggetInn() {
 
         // Mock respons fra sikkerhet - ikke innlogget
         when(sjekk.loggetInn()).thenReturn(null);
@@ -315,14 +314,42 @@ public class EnhetstestBankController {
     }
 
     @Test // Test nr. 8.1 - endre - Innlogget
-    public void endre_Innlogget() {
+    public void test_endre_Innlogget() {
 
         // Arrange
         Kunde innKunde = new Kunde("08088845678", "Petter", "Helgen",
                 "Trondheimsveien 12", "0170", "Oslo", "36759503", "ByeBye");
 
+        innKunde.setPersonnummer(innKunde.getPersonnummer());
 
+        // Mock respons fra sikkerhet - innlogget
+        when(sjekk.loggetInn()).thenReturn("08088845678");
 
+        // Mock respons fra repository
+        when(repo.endreKundeInfo(any(Kunde.class))).thenReturn("OK");
+
+        // Act
+        String resultat = bankController.endre(innKunde);
+
+        // Assert
+        assertEquals("OK", resultat);
+    }
+
+    @Test // Test nr. 8.2 - endre - Ikke innlogget
+    public void test_endre_IkkeLoggetInn() {
+
+        // Arrange
+        Kunde innKunde = new Kunde("08088845678", "Petter", "Helgen",
+                "Trondheimsveien 12", "0170", "Oslo", "36759503", "ByeBye");
+
+        // Mock respons fra sikkerhet - ikke innlogget
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        // Act
+        String resultat = bankController.endre(innKunde);
+
+        // Assert
+        assertNull(resultat);
     }
 
 }
