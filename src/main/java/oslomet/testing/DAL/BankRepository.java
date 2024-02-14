@@ -54,6 +54,7 @@ public class BankRepository {
         }
         return "Feil";
     }
+
     public List<Konto> hentKonti(String personnummer) {
         try{
             String sql = "Select Distinct Kontonummer from Konto Where Personnummer = ?";
@@ -124,7 +125,7 @@ public class BankRepository {
             sql = "Update Konto Set Saldo = ? Where kontonummer = ?";
             db.update(sql,nySaldo,transaksjonen.getKontonummer());
 
-            return "OK";
+            return " OK";
         }
         catch(Exception e){
             return "Feil";
