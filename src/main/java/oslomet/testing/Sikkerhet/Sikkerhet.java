@@ -8,7 +8,8 @@ import oslomet.testing.DAL.BankRepository;
 import javax.servlet.http.HttpSession;
 
 @RestController
-public class Sikkerhet {
+public class
+Sikkerhet {
     @Autowired
     BankRepository rep;
 
