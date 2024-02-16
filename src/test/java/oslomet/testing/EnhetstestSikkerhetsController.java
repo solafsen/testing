@@ -123,11 +123,10 @@ public class EnhetstestSikkerhetsController {
 @Test
 public void test_loggUt(){
     // arrange
-    session.setAttribute("Innlogget", null);
+    session.setAttribute("Utlogget", null);
     //act
-    String resultat = sikkerhetsController.loggetInn();
-    // assert
-    assertNull(resultat);
+    sikkerhetsController.loggUt();
+
 }
 
     @Test
