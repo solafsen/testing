@@ -1,11 +1,15 @@
 package oslomet.testing.Sikkerhet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import oslomet.testing.DAL.BankRepository;
 
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 @RestController
 public class
@@ -61,5 +65,14 @@ Sikkerhet {
             return (String) session.getAttribute("Innlogget");
         }
         return null;
+    }
+
+    // For integrasjonstest
+    @Autowired
+    private DataSource dataSource;
+
+    @GetMapping("/initDBsikkerhet")
+    public String initDB(){
+        return rep.initDB(dataSource);
     }
 }

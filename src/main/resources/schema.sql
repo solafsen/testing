@@ -1,6 +1,9 @@
 -- Database: `Bank` DENNE MÅ VÆRE OPPRETTET FØR SCRIPTET KJØRES !!!
 --
-
+DROP TABLE IF EXISTS Konto;
+DROP TABLE IF EXISTS Kunde;
+DROP TABLE IF EXISTS Poststed;
+DROP TABLE IF EXISTS Transaksjon;
 -- --------------------------------------------------------
 --
 -- Tabellstruktur for tabell `Konto`

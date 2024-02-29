@@ -7,6 +7,7 @@ import oslomet.testing.Models.Konto;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
 import java.util.List;
+import javax.sql.DataSource;
 
 @RestController
 @RequestMapping("/adminKonto")
@@ -53,4 +54,14 @@ public class AdminKontoController {
         }
         return "Ikke innlogget";
     }
+
+    // For integrasjonstest
+    @Autowired
+    private DataSource dataSource;
+
+    @GetMapping("/initDB")
+    public String initDB(){
+        return repository.initDB(dataSource);
+    }
+
 }

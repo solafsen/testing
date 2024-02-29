@@ -12,6 +12,7 @@ import oslomet.testing.Models.Transaksjon;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
 import java.util.List;
+import javax.sql.DataSource;
 
 @RestController
 public class BankController {
@@ -96,5 +97,14 @@ public class BankController {
                 return repository.endreKundeInfo(innKunde);
             }
         return null;
+    }
+
+    // For integrasjonstest
+    @Autowired
+    private DataSource dataSource;
+
+    @GetMapping("/initDB")
+    public String initDB(){
+        return repository.initDB(dataSource);
     }
 }

@@ -7,6 +7,7 @@ import oslomet.testing.Models.Kunde;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
 import java.util.List;
+import javax.sql.DataSource;
 
 @RestController
 @RequestMapping("/adminKunde")
@@ -51,6 +52,15 @@ public class AdminKundeController {
             return repository.slettKunde(personnummer);
         }
         return "Ikke logget inn";
+    }
+
+    // For integrasjonstest
+    @Autowired
+    private DataSource dataSource;
+
+    @GetMapping("/initDB")
+    public String initDB(){
+        return repository.initDB(dataSource);
     }
 }
 
