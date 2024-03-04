@@ -42,7 +42,7 @@ public class EnhetstestAdminKundeController {
     public void test_lagreKundeOK(){
         //arrange
         Kunde kunde1 = new Kunde("1010103256", "Truls", "Andersen", "Trondheimsveien 25", "0125", "Oslo", "45698712", "passord123");
-        Mockito.when(sjekk.loggetInn()).thenReturn("1010103256");
+        Mockito.when(sjekk.loggetInn()).thenReturn("Admin");
 
         Mockito.when(repo.registrerKunde(any(Kunde.class))).thenReturn("OK");
 
