@@ -43,24 +43,24 @@ public class EnhetstestBankController {
         List<Transaksjon> transaksjonListe = new ArrayList<>();
 
         Transaksjon betaling1 = new Transaksjon(1, "20167348913",
-                250, "2023-12-16", "Telia", "1", "10108976011");
+                250, "2023-12-16", "Telia", null, "22334412345");
         Transaksjon betaling2 = new Transaksjon(2, "20226581465",
-                8500, "2023-12-25", "Husleie", "1", "10108976011");
+                8500, "2023-12-25", "Husleie", null, "22334412345");
 
         transaksjonListe.add(betaling1);
         transaksjonListe.add(betaling2);
 
-        Konto kontoen = new Konto("09099956034", "10108976011",
-                15000, "Regningskonto", "NOK", transaksjonListe);
+        Konto kontoen = new Konto("01010110523", "22334412345",
+                15000, "Brukskonto", "NOK", transaksjonListe);
 
         // Mock respons fra sikkerhet - innlogget
-        Mockito.when(sjekk.loggetInn()).thenReturn("09099956034");
+        Mockito.when(sjekk.loggetInn()).thenReturn("01010110523");
 
         // Mock respons fra repository
         Mockito.when(repo.hentTransaksjoner(anyString(), anyString(),anyString())).thenReturn(kontoen);
 
         // Act
-        Konto resultat = bankController.hentTransaksjoner("10108976011", "2023-12-01", "2023-12-31");
+        Konto resultat = bankController.hentTransaksjoner("22334412345", "2023-12-01", "2023-12-31");
 
         // Assert
         assertEquals(kontoen, resultat);
@@ -73,7 +73,7 @@ public class EnhetstestBankController {
         Mockito.when(sjekk.loggetInn()).thenReturn(null);
 
         // Act
-        Konto resultat = bankController.hentTransaksjoner("10108976011", "2023-12-01", "2023-12-31");
+        Konto resultat = bankController.hentTransaksjoner("22334412345", "2023-12-01", "2023-12-31");
 
         // Assert
         assertNull(resultat);
@@ -85,16 +85,16 @@ public class EnhetstestBankController {
         // Arrange
         List<Konto> kontiListe = new ArrayList<>();
 
-        Konto konto1 = new Konto("105010123456", "01010110523",
+        Konto konto1 = new Konto("01010110523", "105010123456",
                 720, "Lønnskonto", "NOK", null);
-        Konto konto2 = new Konto("105010123456", "12345678901",
-                1000, "Lønnskonto", "NOK", null);
+        Konto konto2 = new Konto("01010110523", "22334412345",
+                10234.5, "Brukskonto", "NOK", null);
 
         kontiListe.add(konto1);
         kontiListe.add(konto2);
 
         // Mock respons fra sikkerhet - innlogget
-        when(sjekk.loggetInn()).thenReturn("105010123456");
+        when(sjekk.loggetInn()).thenReturn("01010110523");
 
         // Mock respons fra repository
         when(repo.hentKonti(any(String.class))).thenReturn(kontiListe);
@@ -125,16 +125,16 @@ public class EnhetstestBankController {
         // Arrange
         List<Konto> kontiListe = new ArrayList<>();
 
-        Konto konto1 = new Konto("01011114529", "10108976011",
-                800, "Brukskonto", "NOK", null);
-        Konto konto2 = new Konto("01011114529", "10119085922",
-                4000, "Regningskonto", "NOK", null);
+        Konto konto1 = new Konto("01010110523", "105010123456",
+                720, "Lønnskonto", "NOK", null);
+        Konto konto2 = new Konto("01010110523", "22334412345",
+                10234.5, "Brukskonto", "NOK", null);
 
         kontiListe.add(konto1);
         kontiListe.add(konto2);
 
         // Mock respons fra sikkerhet - innlogget
-        Mockito.when(sjekk.loggetInn()).thenReturn("01011114529");
+        when(sjekk.loggetInn()).thenReturn("01010110523");
 
         // Mock respons fra repository
         Mockito.when(repo.hentSaldi(any(String.class))).thenReturn(kontiListe);
@@ -164,10 +164,10 @@ public class EnhetstestBankController {
 
         // Arrange
         Transaksjon betaling = new Transaksjon(1, "20206782459", 3000, "2024-01-01",
-                "Haflund", "1", "10108976011");
+                "Haflund", "1", "22334412345");
 
         // Mock respons fra sikkerhet - innlogget
-        Mockito.when(sjekk.loggetInn()).thenReturn("09099956034");
+        Mockito.when(sjekk.loggetInn()).thenReturn("01010110523");
 
         // Mock respons fra repository
         Mockito.when(repo.registrerBetaling(any(Transaksjon.class))).thenReturn("OK");
@@ -184,7 +184,7 @@ public class EnhetstestBankController {
 
         // Arrange
         Transaksjon betaling = new Transaksjon(1, "20206782459", 3000, "2024-01-01",
-                "Haflund", "1", "10108976011");
+                "Haflund", "1", "22334412345");
 
         // Mock respons fra sikkerhet - ikke innlogget
         Mockito.when(sjekk.loggetInn()).thenReturn(null);
@@ -203,15 +203,15 @@ public class EnhetstestBankController {
         List<Transaksjon> transaksjonListe = new ArrayList<>();
 
         Transaksjon betaling1 = new Transaksjon(1, "20167348913", 250,
-                "2023-12-16", "Telia", "1", "10108976011");
+                "2023-12-16", "Telia", "1", "105010123456");
         Transaksjon betaling2 = new Transaksjon(2, "20226581465", 8500,
-                "2023-12-25", "Husleie", "1", "10108976011");
+                "2023-12-25", "Husleie", "1", "105010123456");
 
         transaksjonListe.add(betaling1);
         transaksjonListe.add(betaling2);
 
         // Mock respons fra sikkerhet - innlogget
-        Mockito.when(sjekk.loggetInn()).thenReturn("09099956034");
+        Mockito.when(sjekk.loggetInn()).thenReturn("01010110523");
 
         // Mock respons fra repository
         Mockito.when(repo.hentBetalinger(any(String.class))).thenReturn(transaksjonListe);
@@ -239,19 +239,19 @@ public class EnhetstestBankController {
     @Test // Test nr. 6.1 - utforBetaling - innlogget
     public void test_utforBetaling_Innlogget() {
 
-        // Arrange - lager kun objekter av klassen Transaksjon
+        // Arrange - lager objekter av klassen Transaksjon
         List<Transaksjon> transaksjonList = new ArrayList<>();
 
         Transaksjon betaling1 = new Transaksjon(1, "20167348913", 250,
-                "2023-12-16", "Telia", "1", "10108976011");
-        Transaksjon betaling2 = new Transaksjon(5, "20226581465", 8500,
-                "2023-12-25", "Husleie", "1", "10108976011");
+                "2023-12-16", "Telia", "1", "105010123456");
+        Transaksjon betaling2 = new Transaksjon(2, "20226581465", 8500,
+                "2023-12-25", "Husleie", "1", "105010123456");
 
         transaksjonList.add(betaling1);
         transaksjonList.add(betaling2);
 
         // Mock respons fra sikkerhet - innlogget
-        Mockito.when(sjekk.loggetInn()).thenReturn("01011114529");
+        Mockito.when(sjekk.loggetInn()).thenReturn("01010110523");
 
         // Mock respons fra repository for utforBetaling (int txID)
         Mockito.when(repo.utforBetaling(any(Integer.class))).thenReturn("OK");
@@ -268,6 +268,17 @@ public class EnhetstestBankController {
 
     @Test // Test nr. 6.2 - utforBetaling - ikke logget inn
     public void test_utforBetaling_IkkeLoggetInn() {
+
+        // Arrange - lager objekter av klassen Transaksjon
+        List<Transaksjon> transaksjonList = new ArrayList<>();
+
+        Transaksjon betaling1 = new Transaksjon(1, "20167348913", 250,
+                "2023-12-16", "Telia", "1", "105010123456");
+        Transaksjon betaling2 = new Transaksjon(2, "20226581465", 8500,
+                "2023-12-25", "Husleie", "1", "105010123456");
+
+        transaksjonList.add(betaling1);
+        transaksjonList.add(betaling2);
 
         // Mock respons fra sikkerhet - ikke innlogget
         Mockito.when(sjekk.loggetInn()).thenReturn(null);
@@ -317,19 +328,18 @@ public class EnhetstestBankController {
     public void test_endre_Innlogget() {
 
         // Arrange
-        Kunde innKunde = new Kunde("08088845678", "Petter", "Helgen",
-                "Trondheimsveien 12", "0170", "Oslo", "36759503", "ByeBye");
-
-        innKunde.setPersonnummer(innKunde.getPersonnummer());
+        Kunde kunde1 = new Kunde("01010110523",
+                "Lene Marie", "Jensen", "Askerveien 22", "3270",
+                "Asker", "22224444", "HeiHei");
 
         // Mock respons fra sikkerhet - innlogget
-        when(sjekk.loggetInn()).thenReturn("08088845678");
+        when(sjekk.loggetInn()).thenReturn("01010110523");
 
         // Mock respons fra repository
         when(repo.endreKundeInfo(any(Kunde.class))).thenReturn("OK");
 
         // Act
-        String resultat = bankController.endre(innKunde);
+        String resultat = bankController.endre(kunde1);
 
         // Assert
         assertEquals("OK", resultat);
@@ -339,14 +349,15 @@ public class EnhetstestBankController {
     public void test_endre_IkkeLoggetInn() {
 
         // Arrange
-        Kunde innKunde = new Kunde("08088845678", "Petter", "Helgen",
-                "Trondheimsveien 12", "0170", "Oslo", "36759503", "ByeBye");
+        Kunde kunde1 = new Kunde("01010110523",
+                "Lene Marie", "Jensen", "Askerveien 22", "3270",
+                "Asker", "22224444", "HeiHei");
 
         // Mock respons fra sikkerhet - ikke innlogget
         when(sjekk.loggetInn()).thenReturn(null);
 
         // Act
-        String resultat = bankController.endre(innKunde);
+        String resultat = bankController.endre(kunde1);
 
         // Assert
         assertNull(resultat);

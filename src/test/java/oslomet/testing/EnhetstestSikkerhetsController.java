@@ -112,22 +112,22 @@ public class EnhetstestSikkerhetsController {
     @Test
     public void test_LoggetInnOK(){
 
-    // arrange
-        session.setAttribute("Innlogget","12345678901");
-    // act
-    String resultat = sikkerhetsController.loggetInn();
-    // assert
-    assertEquals("12345678901", resultat);
-}
+        // arrange
+            session.setAttribute("Innlogget","12345678901");
+        // act
+        String resultat = sikkerhetsController.loggetInn();
+        // assert
+        assertEquals("12345678901", resultat);
+    }
 
-@Test
-public void test_loggUt(){
-    // arrange
-    session.setAttribute("Utlogget", null);
-    //act
-    sikkerhetsController.loggUt();
+    @Test
+    public void test_loggUt(){
+        // arrange
+        session.setAttribute("Utlogget", null);
+        //act
+        sikkerhetsController.loggUt();
 
-}
+    }
 
     @Test
     public void test_LoggInnAdminOK(){
@@ -156,7 +156,7 @@ public void test_loggUt(){
     }
 
 
-@Test
+    @Test
     public void test_LoggetInnFeilet(){
         //arrange
         when(session.getAttribute("Innlogget")).thenReturn(null);
@@ -164,5 +164,5 @@ public void test_loggUt(){
         String resultat = sikkerhetsController.loggetInn();
         //act
         assertNull(resultat);
-}
+    }
 }

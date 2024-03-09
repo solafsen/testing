@@ -170,18 +170,4 @@ public class AdminRepository {
         return "OK";
     }
 
-    // For integrasjonstest
-    public String initDB(DataSource dataSource){
-        try{
-            Resource skjema = new  ClassPathResource("schema.sql");
-            Resource data = new  ClassPathResource("data.sql");
-            ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(skjema,data);
-            databasePopulator.execute(dataSource);
-            return "OK";
-        }
-        catch(Exception e){
-            return "Feil";
-        }
-    }
-
 }

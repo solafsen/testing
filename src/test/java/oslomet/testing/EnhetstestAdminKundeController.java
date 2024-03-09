@@ -78,7 +78,7 @@ public class EnhetstestAdminKundeController {
         kundeliste.add(kunde1);
         kundeliste.add(kunde2);
 
-        Mockito.when(sjekk.loggetInn()).thenReturn("1010103256");
+        Mockito.when(sjekk.loggetInn()).thenReturn("Admin");
         Mockito.when(repo.hentAlleKunder()).thenReturn(kundeliste);
 
         //act
@@ -101,7 +101,7 @@ public class EnhetstestAdminKundeController {
     public void test_endreKunde_Innlogget(){
         Kunde kunde1 = new Kunde("1010103256", "Truls", "Andersen", "Trondheimsveien 25", "0125", "Oslo", "45698712", "passord123");
         //arrange
-        when(sjekk.loggetInn()).thenReturn("1010103256");
+        when(sjekk.loggetInn()).thenReturn("Admin");
         when(repo.endreKundeInfo(any(Kunde.class))).thenReturn("OK");
         //act
         String resultat = adminKundeController.endre(kunde1);
@@ -125,7 +125,7 @@ public class EnhetstestAdminKundeController {
         Kunde kunde1 = new Kunde("1010103256", "Truls", "Andersen", "Trondheimsveien 25", "0125", "Oslo", "45698712", "passord123");
 
         //arrange
-        when(sjekk.loggetInn()).thenReturn("1010103256");
+        when(sjekk.loggetInn()).thenReturn("Admin");
         when(repo.slettKunde(anyString())).thenReturn("OK");
 
         //act

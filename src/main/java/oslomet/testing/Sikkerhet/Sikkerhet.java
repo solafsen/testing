@@ -64,12 +64,4 @@ Sikkerhet {
         return null;
     }
 
-    // For integrasjonstest
-    @Autowired
-    private DataSource dataSource;
-
-    @GetMapping("/initDBsikkerhet")
-    public String initDB(){
-        return rep.initDB(dataSource);
-    }
 }

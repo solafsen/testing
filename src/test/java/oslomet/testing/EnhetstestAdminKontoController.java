@@ -39,16 +39,18 @@ public class EnhetstestAdminKontoController {
     public void test_hentAlleKonti_LoggetInn() {
 
         // Arrange
-        Konto konto1 = new Konto("01011114529", "10108976011", 800.0, "Brukskonto", "NOK", null);
-        Konto konto2 = new Konto("01011114529", "10119085922", 4000.0, "Regningskonto", "NOK", null);
-
         List<Konto> kontiListe = new ArrayList<>();
+
+        Konto konto1 = new Konto("12345678901", "10108976011", 800.0, "Brukskonto", "NOK", null);
+        Konto konto2 = new Konto("12345678901", "10119085922", 4000.0, "Regningskonto", "NOK", null);
+        Konto konto3 = new Konto("12345678901", "10110344455", 150000.0, "Sparekonto", "NOK", null);
 
         kontiListe.add(konto1);
         kontiListe.add(konto2);
+        kontiListe.add(konto3);
 
         // Mock respons fra sikkerhet -  innlogget
-        Mockito.when(sjekk.loggetInn()).thenReturn("010111114529");
+        Mockito.when(sjekk.loggetInn()).thenReturn("Admin");
 
         // Mock respons fra repository
         Mockito.when(repo.hentAlleKonti()).thenReturn(kontiListe);
@@ -76,11 +78,11 @@ public class EnhetstestAdminKontoController {
     @Test // Test nr 2.1 - registrerKonto - logget inn
     public void test_registrerKonto_LoggetInn() {
 
-        // Arrange
-        Konto konto1 = new Konto("07077714825", "10109972361", 1000.0, "Brukskonto", "NOK", null);
+        // Arrange - antar at det er kunden med dette personnumeret i databasen 
+        Konto konto1 = new Konto("12345678901", "10108976011", 800.0, "Brukskonto", "NOK", null);
 
         // Mock respons fra sikkerhet - innlogget
-        Mockito.when(sjekk.loggetInn()).thenReturn("07077714825");
+        Mockito.when(sjekk.loggetInn()).thenReturn("Admin");
 
         // Mock respons fra repository
         Mockito.when(repo.registrerKonto(any(Konto.class))).thenReturn("OK");
@@ -92,11 +94,11 @@ public class EnhetstestAdminKontoController {
         assertEquals("OK", resultat);
     }
 
-    @Test // Test nr 2.2 - registrerKonto - ikke innlogget
+    @Test // Test nr 2.3 - registrerKonto - ikke innlogget
     public void test_registrerKonto_IkkeLoggetInn() {
 
         // Arrange
-        Konto konto1 = new Konto("07077714825", "10109972361", 1000.0, "Brukskonto", "NOK", null);
+        Konto konto1 = new Konto("12345678901", "10108976011", 800.0, "Brukskonto", "NOK", null);
 
         // Mock respons fra sikkerhet - ikke innlogget
         Mockito.when(sjekk.loggetInn()).thenReturn(null);
@@ -112,16 +114,16 @@ public class EnhetstestAdminKontoController {
     public void test_endreKonto_LoggetInn() {
 
         // Arrange
-        Konto konto1 = new Konto("07077714825", "10109972361", 1000.0, "Brukskonto", "NOK", null);
+        Konto konto2 = new Konto("12345678901", "10119085922", 15000.0, "Regningskonto", "NOK", null);
 
         // Mock respons fra sikkerhet - logget inn
-        Mockito.when(sjekk.loggetInn()).thenReturn("07077714825");
+        Mockito.when(sjekk.loggetInn()).thenReturn("Admin");
 
         // Mock respons fra repository
         Mockito.when(repo.endreKonto(any(Konto.class))).thenReturn("OK");
 
         // Act
-        String resultat = adminKontoController.endreKonto(konto1);
+        String resultat = adminKontoController.endreKonto(konto2);
 
         // Assert
         assertEquals("OK", resultat);
@@ -131,13 +133,13 @@ public class EnhetstestAdminKontoController {
     public void test_endreKonto_IkkeLoggetInn() {
 
         // Arrange
-        Konto konto1 = new Konto("07077714825", "10109972361", 1000.0, "Brukskonto", "NOK", null);
+        Konto konto2 = new Konto("12345678901", "10119085922", 15000.0, "Regningskonto", "NOK", null);
 
         // Mock respons fra sikkerhet - ikke innlogget
         Mockito.when(sjekk.loggetInn()).thenReturn(null);
 
         // Act
-        String resultat = adminKontoController.endreKonto(konto1);
+        String resultat = adminKontoController.endreKonto(konto2);
 
         // Assert
         assertEquals("Ikke innlogget", resultat);
@@ -147,13 +149,13 @@ public class EnhetstestAdminKontoController {
     public void test_slettKonto_LoggetInn() {
 
         // Mock respons fra sikkerhet
-        Mockito.when(sjekk.loggetInn()).thenReturn("10109972361");
+        Mockito.when(sjekk.loggetInn()).thenReturn("Admin");
 
         // Mock repons fra repository
         Mockito.when(repo.slettKonto(any(String.class))).thenReturn("OK");
 
         // Act
-        String resultat = adminKontoController.slettKonto("10109972361");
+        String resultat = adminKontoController.slettKonto("10108976011");
 
         // Assert
         assertEquals("OK", resultat);
@@ -166,7 +168,7 @@ public class EnhetstestAdminKontoController {
         Mockito.when(sjekk.loggetInn()).thenReturn(null);
 
         // Act
-        String resultat = adminKontoController.slettKonto("10109972361");
+        String resultat = adminKontoController.slettKonto("10108976011");
 
         // Assert
         assertEquals("Ikke innlogget", resultat);
